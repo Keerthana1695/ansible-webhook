@@ -5,7 +5,7 @@
         token: 7d52c4274cedb258e52445314e28d61e7c93bd2b
   rules:
     - name: React to GitHub Push
-      condition: event.payload.ref == "refs/heads/main"
+      condition: event.payload.action == "opened"
       action:
         run_job_template:
           name: github  # your AAP job template name
