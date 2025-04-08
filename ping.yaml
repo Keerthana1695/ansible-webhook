@@ -19,22 +19,12 @@
           Title: {{ ansible_eda.event.payload.issue.title }}
           Body: {{ ansible_eda.event.payload.issue.body }}
           URL: {{ ansible_eda.event.payload.issue.html_url }}
-    # - name: Create a namespace
-    #   kubernetes.core.k8s:
-    #     state: present
-    #     api_version: v1
-    #     kind: Namespace
-    #     name: "{{ ansible_eda.event.payload.issue.body }}"
-    # - name: Comment on the issue
-    #   uri:
-    #     url: "{{ issue_url }}/comments"
-    #     method: POST
-    #     headers: "{{ headers }}"
-    #     body_format: json
-    #     body:
-    #       body: |
-    #         👋 Thanks for creating this issue! your namespace {{ ansible_eda.event.payload.issue.body }} is now created!!!.
-    #     status_code: 201
+    - name: Create a namespace
+      kubernetes.core.k8s:
+        state: present
+        api_version: v1
+        kind: Namespace
+        name: "{{ ansible_eda.event.payload.issue.body }}"
     - name: Post a comment on the GitHub issue
       community.general.github_issue_comment:
         token: "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"
