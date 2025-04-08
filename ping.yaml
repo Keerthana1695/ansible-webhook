@@ -32,7 +32,7 @@
         url: "https://api.github.com/repos/{{ repo_owner }}/{{ repo_name }}/issues/{{ issue_number }}/comments"
         method: POST
         headers:
-          Authorization: "token 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"
+          Authorization: "token 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"
           Content-Type: "application/json"
         body: |
           {
