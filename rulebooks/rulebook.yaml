@@ -8,4 +8,4 @@
       condition: event.payload.ref == "refs/heads/main"
       action:
         run_job_template:
-          name: github-response-template  # your AAP job template name
+          name: github  # your AAP job template name
