@@ -1,0 +1,8 @@
+---
+- name: GitHub Push Response
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Print GitHub Repo Info
+      debug:
+        msg: "Repo pushed: {{ event.payload.repository.full_name }} by {{ event.payload.pusher.name }}"
