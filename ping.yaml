@@ -28,9 +28,16 @@
         kind: Namespace
         name: "{{ ansible_eda.event.payload.issue.body }}"
     - name: Post a comment on the GitHub issue
-      community.general.github_issue_comment:
-        token: "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"
-        repo_owner: "{{ repo_owner }}"
-        repo_name: "{{ repo_name }}"
-        issue_number: "{{ issue_number }}"
-        body: "👋 Thanks for creating this issue! your namespace {{ ansible_eda.event.payload.issue.body }} is now created!!!."
+      uri:
+        url: "https://api.github.com/repos/{{ repo_owner }}/{{ repo_name }}/issues/{{ issue_number }}/comments"
+        method: POST
+        headers:
+          Authorization: "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"
+          Content-Type: "application/json"
+        body: |
+          {
+            "body": "👋 Thanks for creating this issue! your namespace {{ ansible_eda.event.payload.issue.body }} is now created!!!."
+          }
+        body_format: json
+        status_code: 201
+      register: result
