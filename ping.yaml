@@ -1,8 +1,14 @@
 ---
-- name: GitHub Push Response
+- name: Handle New GitHub Issue
   hosts: localhost
   gather_facts: false
   tasks:
-    - name: Print GitHub Repo Info
+    - name: Show GitHub Issue Info
       debug:
-        msg: "Repo pushed: {{ event.payload.repository.full_name }} by {{ event.payload.pusher.name }}"
+        msg: |
+          🐛 New GitHub Issue Created!
+          Title: {{ event.payload.issue.title }}
+          Body: {{ event.payload.issue.body }}
+          URL: {{ event.payload.issue.html_url }}
+
+    # Optional: do something with the issue (e.g. tag it, comment via API, etc.)
