@@ -1,14 +1,36 @@
 ---
-- name: Handle New GitHub Issue
+- name: Respond to new GitHub issue
   hosts: localhost
   gather_facts: false
+  vars:
+    repo_owner: "{{ ansible_eda.event.payload.repository.owner.login }}"
+    repo_name: "{{ ansible_eda.event.payload.repository.name }}"
+    issue_number: "{{ ansible_eda.event.payload.issue.number }}"
+    issue_url: "https://api.github.com/repos/{{ repo_owner }}/{{ repo_name }}/issues/{{ issue_number }}"
+    headers:
+      Authorization: "Bearer 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"
+      Accept: "application/vnd.github.v3+json"
+
   tasks:
-    - name: Show GitHub Issue Info
+    - name: Debug the issue info
       debug:
         msg: |
-          🐛 New GitHub Issue Created!
+          🐛 New issue created!
           Title: {{ ansible_eda.event.payload.issue.title }}
           Body: {{ ansible_eda.event.payload.issue.body }}
           URL: {{ ansible_eda.event.payload.issue.html_url }}
-
-    # Optional: do something with the issue (e.g. tag it, comment via API, etc.)
+    - name: Create a namespace
+      kubernetes.core.k8s:
+        state: present
+        kind: Namespace
+        name: {{ ansible_eda.event.payload.issue.body }}
+    - name: Comment on the issue
+      uri:
+        url: "{{ issue_url }}/comments"
+        method: POST
+        headers: "{{ headers }}"
+        body_format: json
+        body:
+          body: |
+            👋 Thanks for creating this issue! your namespace {{ ansible_eda.event.payload.issue.body }} is now created!!!.
+        status_code: 201
