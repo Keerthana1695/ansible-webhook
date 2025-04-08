@@ -1,14 +1,8 @@
----
-- name: Handle New GitHub Issue
+- name: Log everything
   hosts: localhost
   gather_facts: false
   tasks:
-    - name: Show GitHub Issue Info
-      debug:
-        msg: |
-          🐛 New GitHub Issue Created!
-          Title: {{ event.payload.issue.title }}
-          Body: {{ event.payload.issue.body }}
-          URL: {{ event.payload.issue.html_url }}
-
-    # Optional: do something with the issue (e.g. tag it, comment via API, etc.)
+    - name: Dump all
+      set_stats:
+        data:
+          all_vars: "{{ vars }}"
