@@ -22,6 +22,7 @@
     - name: Create a namespace
       kubernetes.core.k8s:
         state: present
+        api_version: v1
         kind: Namespace
         name: {{ ansible_eda.event.payload.issue.body }}
     - name: Comment on the issue
