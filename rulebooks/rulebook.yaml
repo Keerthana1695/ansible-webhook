@@ -10,3 +10,5 @@
         run_job_template:
           name: github  # your AAP job template name
           organization: Default
+          extra_vars:
+            event: "{{ event }}"
