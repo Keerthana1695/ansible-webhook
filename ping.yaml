@@ -10,7 +10,7 @@
     issue_number: "{{ ansible_eda.event.payload.issue.number }}"
     issue_url: "https://api.github.com/repos/{{ repo_owner }}/{{ repo_name }}/issues/{{ issue_number }}"
     headers:
-      Authorization: "Bearer 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"
+      Authorization: "Bearer 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h"
       Accept: "application/vnd.github.v3+json"
 
   tasks:
